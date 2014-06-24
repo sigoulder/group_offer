@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  offer_id: 1
+  product_id: 1
+  type_id: 1
+  on_switch: false
+
+two:
+  offer_id: 1
+  product_id: 1
+  type_id: 1
+  on_switch: false

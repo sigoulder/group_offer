@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Name:</strong>
+  <%= @offer.name %>
+</p>
+
+<p>
+  <strong>Min participants:</strong>
+  <%= @offer.min_participants %>
+</p>
+
+<p>
+  <strong>Max participants:</strong>
+  <%= @offer.max_participants %>
+</p>
+
+<p>
+  <strong>Number of Products:</strong>
+  <%= @offer.no_products %>
+</p>
+<p>
+  <strong>Start at:</strong>
+  <%= @offer.start_at %>
+</p>
+
+<p>
+  <strong>End at:</strong>
+  <%= @offer.end_at %>
+</p>
+
+<p>
+  <strong>Quota:</strong>
+  <%= @offer.quota %>
+</p>
+
+<%= link_to 'Edit', edit_offer_path(@offer) %> |
+<%= link_to 'Back', offers_path %>
