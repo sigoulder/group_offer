@@ -1,7 +1,7 @@
 class OffersController < ApplicationController
   before_action :set_offer, only: [:show, :edit, :update, :destroy]
 
-  layout "offer"
+  #layout "offer"
 
   # GET /offers
   def index
@@ -11,10 +11,8 @@ class OffersController < ApplicationController
   # GET /offers/1
   def show
     @offer = Offer.find(params[:id])
-    @parts = Participant.all
-    @tasks = Task.all
-    @eachtask = @tasks.where(:offer_id => @offer.id)
-    @eachparts = @parts.where(:offer_id => @offer.id)
+    @eachparts = @offer.participants
+    @eachtasks = @offer.tasks
   end
 
   # GET /offers/new
@@ -38,9 +36,7 @@ class OffersController < ApplicationController
       if @offer.save
       # If save succeeds, redirect to index action
 
-
-        #self.add_participants(offer_params[:max_participants].to_i)
-
+        @offer.crud_participants(offer_params[:max_participants].to_i)
 
         format.html { redirect_to @offer, notice: 'Offer was successfully created.' }
       else 
@@ -56,7 +52,7 @@ class OffersController < ApplicationController
   def update
     respond_to do |format|
       if @offer.update(offer_params)
-        self.add_participants(offer_params[:max_participants].to_i)
+        @offer.crud_participants(offer_params[:max_participants].to_i)
         format.html { redirect_to @offer, notice: 'Offer was successfully updated.' }
       else
         format.html { render :edit }

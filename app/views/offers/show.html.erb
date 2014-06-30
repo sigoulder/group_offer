@@ -47,10 +47,10 @@
     </tr>
   </thead>
   <tbody align="center">
-    <% @eachtask.each do |task| %>
+    <% @eachtasks.each do |task| %>
       <tr>
         <td>
-          <strong>Task <%= task.id %></strong>
+          <strong><%= task.name %> (<%= task.task_types.name %>)</strong>
         </td>
         <% @eachparts.each do |count| %>
           <td><%= check_box_tag(:test) %></td>
@@ -59,7 +59,15 @@
     <% end %>
   </tbody>
 </table>
-<h4>+ <%= link_to 'Add Task', '#' %> <%= select(:task_type, :id, [['Compulsory', 1], ['Optional', 2], ['Any X in Y', 3]]) %> <button>Go</button></h4>
+<br>
+<h4>Add New Task:</h4>
+<%= form_tag(tasks_path, method: "post") do %>
+<%= text_field_tag("name", nil, placeholder: "Name") %>
+<%= text_field_tag("quota", nil, placeholder: "Quota") %>
+<%= select_tag("type_id", options_for_select([['Compulsory', 1], ['Optional', 2], ['Any X in Y', 3]])) %>
+<%= hidden_field_tag("offer_id", @offer.id) %>
+<%= submit_tag("Add Task") %> 
+<% end %>
 <br>
 
 
