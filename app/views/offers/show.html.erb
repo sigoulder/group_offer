@@ -1,37 +1,68 @@
-<p id="notice"><%= notice %></p>
-<p>
-  <strong>Name:</strong>
-  <%= @offer.name %>
-</p>
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Offer</th>
+      <th>Participants (Min)</th>
+      <th>Participants (Max)</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <tr>
+      <td>
+        <%= @offer.id %>
+      </td>
+      <td>
+        <%= @offer.name %>
+      </td>
+      <td>
+        <%= @offer.min_participants %>
+      </td>
+      <td>
+        <%= @offer.max_participants %>
+      </td>
+      <td>
+        <%= @offer.start_at.strftime("%d/%m/%Y") %>
+      </td>
+      <td>
+        <%= @offer.end_at.strftime("%d/%m/%Y") %>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<p>
-  <strong>Min participants:</strong>
-  <%= @offer.min_participants %>
-</p>
+<h3>Tasks:</h3>
+<table border="2" cellpadding="10" cellspacing="2">
+  <thead>
+    <tr>
+      <th rowspan="2"></th>
+      <th colspan="<%= @eachparts.count %>">Participants</th>
+    </tr>
+    <tr>
+        <% @eachparts.each do |part| %>
+        <th width="75">User <%= part.id %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody align="center">
+    <% @eachtask.each do |task| %>
+      <tr>
+        <td>
+          <strong>Task <%= task.id %></strong>
+        </td>
+        <% @eachparts.each do |count| %>
+          <td><%= check_box_tag(:test) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<h4>+ <%= link_to 'Add Task', '#' %> <%= select(:task_type, :id, [['Compulsory', 1], ['Optional', 2], ['Any X in Y', 3]]) %> <button>Go</button></h4>
+<br>
 
-<p>
-  <strong>Max participants:</strong>
-  <%= @offer.max_participants %>
-</p>
 
-<p>
-  <strong>Number of Products:</strong>
-  <%= @offer.no_products %>
-</p>
-<p>
-  <strong>Start at:</strong>
-  <%= @offer.start_at %>
-</p>
-
-<p>
-  <strong>End at:</strong>
-  <%= @offer.end_at %>
-</p>
-
-<p>
-  <strong>Quota:</strong>
-  <%= @offer.quota %>
-</p>
 
 <%= link_to 'Edit', edit_offer_path(@offer) %> |
 <%= link_to 'Back', offers_path %>

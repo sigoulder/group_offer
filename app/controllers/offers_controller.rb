@@ -1,15 +1,20 @@
 class OffersController < ApplicationController
   before_action :set_offer, only: [:show, :edit, :update, :destroy]
 
+  layout "offer"
+
   # GET /offers
-  # GET /offers.json
   def index
     @offers = Offer.all
   end
 
   # GET /offers/1
-  # GET /offers/1.json
   def show
+    @offer = Offer.find(params[:id])
+    @parts = Participant.all
+    @tasks = Task.all
+    @eachtask = @tasks.where(:offer_id => @offer.id)
+    @eachparts = @parts.where(:offer_id => @offer.id)
   end
 
   # GET /offers/new
@@ -22,54 +27,54 @@ class OffersController < ApplicationController
   end
 
   # POST /offers
-  # POST /offers.json
   def create
+
+  # Instantiate new object using form parameters
     @offer = Offer.new(offer_params)
 
+    # Save the object
     respond_to do |format|
-      if @offer.save
-        @offer_loops = offer_params[:max_participants].to_i
-        @task_loops = offer_params[:no_products].to_i
 
-        @offer_loops.times { Participant.create(:offer_id => @offer.id, :on_switch => 0) }
-        @task_loops.times { Task.create(:offer_id => @offer.id, :on_switch => 0) }
+      if @offer.save
+      # If save succeeds, redirect to index action
+
+
+        #self.add_participants(offer_params[:max_participants].to_i)
+
 
         format.html { redirect_to @offer, notice: 'Offer was successfully created.' }
-        format.json { render :show, status: :created, location: @offer }
-      else
+      else 
+      # If save fails, redisplay form so user can fix problems
+
         format.html { render :new }
-        format.json { render json: @offer.errors, status: :unprocessable_entity }
+
       end
     end
   end
 
   # PATCH/PUT /offers/1
-  # PATCH/PUT /offers/1.json
   def update
     respond_to do |format|
       if @offer.update(offer_params)
+        self.add_participants(offer_params[:max_participants].to_i)
         format.html { redirect_to @offer, notice: 'Offer was successfully updated.' }
-        format.json { render :show, status: :ok, location: @offer }
       else
         format.html { render :edit }
-        format.json { render json: @offer.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /offers/1
-  # DELETE /offers/1.json
   def destroy
     @offer.destroy
     respond_to do |format|
       format.html { redirect_to offers_url, notice: 'Offer was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_offer
+    def set_offer 
       @offer = Offer.find(params[:id])
     end
 
