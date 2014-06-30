@@ -11,18 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140630105911) do
+ActiveRecord::Schema.define(version: 20140630143702) do
 
   create_table "offers", force: true do |t|
     t.string   "name"
     t.integer  "min_participants"
     t.date     "start_at"
     t.date     "end_at"
-    t.integer  "quota"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "max_participants"
-    t.integer  "no_products"
   end
 
   create_table "participants", force: true do |t|
@@ -33,6 +31,22 @@ ActiveRecord::Schema.define(version: 20140630105911) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "products", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products_tasks", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products_tasks", ["product_id"], name: "index_products_tasks_on_product_id"
+  add_index "products_tasks", ["task_id"], name: "index_products_tasks_on_task_id"
 
   create_table "task_types", force: true do |t|
     t.string   "name"

@@ -6,10 +6,8 @@
       <th>Name</th>
       <th>Min participants</th>
       <th>Max participants</th>
-      <th>Number of Products</th>
       <th>Start at</th>
       <th>End at</th>
-      <th>Quota</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,10 +18,8 @@
         <td><%= link_to offer.name, offer %></td>
         <td><%= offer.min_participants %></td>
         <td><%= offer.max_participants %></td>
-        <td><%= offer.no_products %></td>
         <td><%= offer.start_at.strftime("%d/%m/%Y") %></td>
         <td><%= offer.end_at.strftime("%d/%m/%Y") %></td>
-        <td><%= offer.quota %></td>
         <td><%= link_to 'Edit', edit_offer_path(offer) %></td>
         <td><%= link_to 'Remove', offer, method: :delete, data: { confirm: "Are you sure you want to remove #{offer.name}?" } %></td>
       </tr>

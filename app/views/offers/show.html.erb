@@ -39,10 +39,13 @@
     <tr>
       <th rowspan="2"></th>
       <th colspan="<%= @eachparts.count %>">Participants</th>
+      <th rowspan="2"></th>
     </tr>
     <tr>
+        <% i = 1 %>
         <% @eachparts.each do |part| %>
-        <th width="75">User <%= part.id %></th>
+        <th width="75">User <%= i %></th>
+        <% i = i+1 %>
       <% end %>
     </tr>
   </thead>
@@ -50,23 +53,24 @@
     <% @eachtasks.each do |task| %>
       <tr>
         <td>
-          <strong><%= task.name %> (<%= task.task_types.name %>)</strong>
+          <strong><%= task.name %> (<%= task.task_type.name %>)</strong>
         </td>
         <% @eachparts.each do |count| %>
           <td><%= check_box_tag(:test) %></td>
         <% end %>
+        <td>
+          <%= link_to 'Remove', task, method: :delete, data: { confirm: "Are you sure you want to remove #{task.name}?" } %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
-<h4>Add New Task:</h4>
-<%= form_tag(tasks_path, method: "post") do %>
-<%= text_field_tag("name", nil, placeholder: "Name") %>
-<%= text_field_tag("quota", nil, placeholder: "Quota") %>
-<%= select_tag("type_id", options_for_select([['Compulsory', 1], ['Optional', 2], ['Any X in Y', 3]])) %>
+<h4>New Task:</h4>
+<%= form_tag(new_task_path, method: "get") do %>
+<%= select_tag("task_type_id", options_for_select([['Compulsory', 1], ['Optional', 2], ['Either-Or', 3]])) %>
 <%= hidden_field_tag("offer_id", @offer.id) %>
-<%= submit_tag("Add Task") %> 
+<%= submit_tag("Add") %> 
 <% end %>
 <br>
 

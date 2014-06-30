@@ -1,0 +1,39 @@
+<%= form_for(@task) do |f| %>
+	<%= f.hidden_field :task_type_id, value: params[:task_type_id] %>
+	<%= f.hidden_field :offer_id, value: params[:offer_id] %>
+	<% if params[:task_type_id].to_i == 1 %>
+		<h2>Create new Compulsory task</h2>
+		  <div class="field">
+		    <%= f.label :name %><br>
+		    <%= f.text_field :name %>
+		  </div>
+	<% elsif params[:task_type_id].to_i == 2 %>
+	<h2>Create new Optional task</h2>
+		<div class="field">
+		    <%= f.label "No, Produts" %><br>
+		    <%= f.number_field :no_products %>
+		</div>
+		<div class="field">
+		    <%= f.label :quota %><br>
+		    <%= f.number_field :quota %>
+		</div>
+
+	<% elsif params[:task_type_id].to_i == 3 %>
+
+	<h2>Create new Either-Or task</h2>
+		<div class="field">
+		    <%= f.label "No, Produts" %><br>
+		    <%= f.number_field :no_products %>
+		</div>
+		<div class="field">
+		    <%= f.label :quota %><br>
+		    <%= f.number_field :quota %>
+		</div>
+
+	<% else %>
+		<p><strong>Error: Task ype not known</strong></p>
+	<% end %>
+	<div class="actions">
+		<%= f.submit %>
+	</div>
+<% end %>

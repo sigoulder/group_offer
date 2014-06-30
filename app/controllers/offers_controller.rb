@@ -12,7 +12,7 @@ class OffersController < ApplicationController
   def show
     @offer = Offer.find(params[:id])
     @eachparts = @offer.participants
-    @eachtasks = @offer.tasks
+    @eachtasks = @offer.tasks.order_by_task_type
   end
 
   # GET /offers/new
@@ -76,6 +76,6 @@ class OffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def offer_params
-      params.require(:offer).permit(:name, :min_participants, :max_participants, :no_products, :start_at, :end_at, :quota)
+      params.require(:offer).permit(:name, :min_participants, :max_participants, :start_at, :end_at)
     end
 end
