@@ -4,7 +4,8 @@
 	<% params[:no_products].to_i.times do %>
 		<div class="field">
 		    <%= f.label "Product #{i}" %><br>
-		    <%= f.text_field :name, "name[]" %>
+		    <%#= f.text_field :name %>
+		    <%= text_field "name", i %>
 		</div>
 	<% i+=1 %>
 	<% end %>
