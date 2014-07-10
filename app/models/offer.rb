@@ -7,7 +7,6 @@ class Offer < ActiveRecord::Base
 	def crud_participants(no_participants)
 		difference = self.participants.count - no_participants
 		difference = difference.abs
-		puts "DIFF: #{difference}"
 
     	# Create rows for tasks and participants in db
     	if self.participants.count > no_participants 

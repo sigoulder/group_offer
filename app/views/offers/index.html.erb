@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Tasks</th>
       <th>Min participants</th>
       <th>Max participants</th>
       <th>Start at</th>
@@ -16,6 +17,7 @@
     <% @offers.each do |offer| %>
       <tr>
         <td><%= link_to offer.name, offer %></td>
+        <td><%= offer.tasks.count %></td>
         <td><%= offer.min_participants %></td>
         <td><%= offer.max_participants %></td>
         <td><%= offer.start_at.strftime("%d/%m/%Y") %></td>

@@ -1,15 +1,14 @@
 <h1>Add Products to task</h1>
 <% i=1 %>
-<%= form_for(@product) do |f| %>
+<%= form_for(@product) do |f| %>		
 	<% params[:no_products].to_i.times do %>
 		<div class="field">
 		    <%= f.label "Product #{i}" %><br>
-		    <%#= f.text_field :name %>
-		    <%= text_field "name", i %>
+		    <%= text_field "name", "#{i-1}" %>
 		</div>
-	<% i+=1 %>
+	<% i+=1 %>	
 	<% end %>
 		<div class="actions">
-			<%= f.submit "Add to task" %>
+			<%= f.submit "Add" %>
 		</div>	
 <% end %>

@@ -55,10 +55,10 @@
     <% @eachtasks.each do |task| %>
       <tr>
         <td>
-          <%= task.task_type.name %>
+          <strong><%= task.task_type.name %></strong>
         </td>
         <td>
-          <strong><%= task.name %></strong>
+          <%= task.name %>
         </td>
         <% @eachparts.each do |count| %>
           <td><%= check_box_tag(:test) %></td>

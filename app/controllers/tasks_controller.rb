@@ -11,14 +11,21 @@ class TasksController < ApplicationController
 		@task = Task.create(task_params)
 
 		if @task.task_type_id == 1 #compulsory
+
 			#create task and product with the same name
+			
+			@prod = Product.create(:name => task_params[:name])
+			@prodtask = ProductsTask.create(:product_id => @prod.id, :task_id => @task.id)
+			
 			redirect_to offer_path(@task.offer_id)
+
 		elsif @task.task_type_id == 2 || 3
 
-			redirect_to task_path(@task, :no_products => task_params[:no_products])
+			redirect_to task_path(@task, :no_products => task_params[:no_products], 
+				:offer_id => task_params[:offer_id], 
+				:task_id => @task.id)
 		end	
 	end
-
 
 	def new
 		@task = Task.new
