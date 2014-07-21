@@ -5,16 +5,15 @@ class ProductsController < ApplicationController
 	end
 
 	def new
-		@product = Product.new
+		#@product = Product.new
 	end
 
 	def create
 		params[:name].each do |p|
-			@prod = Product.create(:name => p[1])
-			@prod.save
-			@producttask = ProductsTask.create(:product_id => @prod.id, :task_id => params[:task_id])
+			@task = Task.create(:name => p[1], :offer_id => offer_id, :offer_id => params[:offer_id], :task_type_id => params[:task_type_id])
+			@task.save
 		end
-		redirect_to offer_path(:id => 53)
+		redirect_to offer_path(:id => params[:offer_id])
 	end
 
 

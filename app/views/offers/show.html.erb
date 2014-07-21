@@ -34,6 +34,7 @@
 </table>
 
 <h3>Tasks:</h3>
+<%#= @party = ParticipantsTask.find_by(offer_id: 53).value %>
 <table border="2" cellpadding="10" cellspacing="2">
   <thead>
     <tr>
@@ -51,7 +52,9 @@
       <% end %>
     </tr>
   </thead>
-  <tbody align="center">
+    <tbody align="center">
+<%= form_tag(participants_task_path(@offer.id), method: "get") do %>
+<%= hidden_field_tag :offer_id, value = @offer.id %>
     <% @eachtasks.each do |task| %>
       <tr>
         <td>
@@ -60,9 +63,15 @@
         <td>
           <%= task.name %>
         </td>
-        <% @eachparts.each do |count| %>
-          <td><%= check_box_tag(:test) %></td>
-        <% end %>
+          <% @eachparts.each do |count| %>
+          <td>
+              <% if ParticipantsTask.exists?(:task_id => task.id, :participant_id => count.id, :offer_id => @offer.id) %>
+                <%= check_box_tag("tasks[#{task.id}][#{count.id}]", checked_value = "1", unchecked_value = "0", checked = true ) %>
+              <% else %>
+                <%= check_box_tag("tasks[#{task.id}][#{count.id}]", value = "1") %>
+              <% end %>
+          </td>
+          <% end %>  
         <td>
           <%= link_to 'Remove', task, method: :delete, data: { confirm: "Are you sure you want to remove #{task.name}?" } %>
         </td>
@@ -70,6 +79,9 @@
     <% end %>
   </tbody>
 </table>
+<br>
+  <%= submit_tag("Validate Offer") %>
+<% end %>
 <br>
 <h4>New Task:</h4>
 <%= form_tag(new_task_path, method: "get") do %>

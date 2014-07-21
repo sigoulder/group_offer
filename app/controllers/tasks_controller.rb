@@ -5,30 +5,35 @@ class TasksController < ApplicationController
 		
 		@product = Product.new
 		
-	end	
+	end
 
 	def create
-		@task = Task.create(task_params)
+		#puts "TASK ID: #{params[:task][:task_type_id]}"
+		type_id = params[:task][:task_type_id].to_i
 
-		if @task.task_type_id == 1 #compulsory
+		if type_id == 1 # Compulsory
 
 			#create task and product with the same name
-			
-			@prod = Product.create(:name => task_params[:name])
-			@prodtask = ProductsTask.create(:product_id => @prod.id, :task_id => @task.id)
-			
-			redirect_to offer_path(@task.offer_id)
+			@task = Task.create(task_params)
+			redirect_to offers_path(params[:task][:offer_id])
 
-		elsif @task.task_type_id == 2 || 3
+		elsif type_id == 2 # Optional
+			
+			# this redirects to show.html.erb view, where the task logic happens
+			redirect_to task_path(@task, 
+				:no_products => task_params[:no_products], 
+				:id => task_params[:offer_id])
 
-			redirect_to task_path(@task, :no_products => task_params[:no_products], 
-				:offer_id => task_params[:offer_id], 
-				:task_id => @task.id)
-		end	
+		elsif type_id == 3 #Either-Or
+
+		else 
+			redirect_to offer_path(params[:task][:offer_id]), notice: 'Something went wrong'
+		end		
 	end
 
 	def new
 		@task = Task.new
+		#redirect_to offer_path(@task.offer_id)
 	end
 
 	def destroy
