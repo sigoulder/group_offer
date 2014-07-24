@@ -5,13 +5,24 @@ class ParticipantsTasksController < ApplicationController
 
 	def show
 		# This should all go in the model
-		#ParticipantsTask.delete_all(:offer_id => params[:offer_id])
 		params[:tasks].collect do |index, item|
+
 			item.each do |inn, it|
+
 				if !ParticipantsTask.exists?(:task_id => index, :participant_id => inn, :offer_id => params[:offer_id])
-					@parttask = ParticipantsTask.create(:task_id => index, :participant_id => inn, :offer_id => params[:offer_id], :value => 1)
+					#create
+					@parttask = ParticipantsTask.create(:task_id => index, :participant_id => inn, :offer_id => params[:offer_id], :value => it)
+				else
+					#@fin = ParticipantsTask.find(:task_id => index, :participant_id => inn, :offer_id => params[:offer_id])
+					#@fin.save
+					puts "Right here #{@fin.id}"
 				end
+					#update
+					# @fin.each do |pt|
+					# 	puts "Task id: #{pt.task_id}, Participant id: #{pt.participant_id}, Value: #{pt.value}"
+					# end
 			end
+			
 		end
 
 		#perform validation here before redirect

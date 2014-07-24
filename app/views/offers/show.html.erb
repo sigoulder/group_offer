@@ -53,7 +53,7 @@
     </tr>
   </thead>
     <tbody align="center">
-<%= form_tag(participants_task_path(@offer.id), method: "get") do %>
+<%= form_for(participants_task_path(@offer.id), method: "get") do %>
 <%= hidden_field_tag :offer_id, value = @offer.id %>
     <% @eachtasks.each do |task| %>
       <tr>
@@ -65,10 +65,13 @@
         </td>
           <% @eachparts.each do |count| %>
           <td>
-              <% if ParticipantsTask.exists?(:task_id => task.id, :participant_id => count.id, :offer_id => @offer.id) %>
-                <%= check_box_tag("tasks[#{task.id}][#{count.id}]", checked_value = "1", unchecked_value = "0", checked = true ) %>
+              <% if ParticipantsTask.exists?(:task_id => task.id, :participant_id => count.id, :offer_id => @offer.id, :value => true) %>
+                <%#= check_box("tasks[#{task.id}][#{count.id}]", checked_value = "1", checked = true ) %>
+                <strong>✓</strong>
+                <%= check_box("tasks[#{task.id}]", "#{count.id}") %>
               <% else %>
-                <%= check_box_tag("tasks[#{task.id}][#{count.id}]", value = "1") %>
+                <%#= check_box_tag("tasks[#{task.id}][#{count.id}]", value = "1") %>
+                <%= check_box("tasks[#{task.id}]", "#{count.id}") %>
               <% end %>
           </td>
           <% end %>  
